@@ -15,6 +15,7 @@ import (
 //copy retries ("ID","RetryID","Action","Payload","RetryCount","Type","Timestamp","BucketID","ErrorMessage","UpdatedAt") from 'results.csv' with delimiter='|' and maxbatchsize = 1 ;
 
 func main() {
+	//Open csv file with existing columns
 	readerFile, err := os.Open("./dump.csv")
 	if err != nil {
 		fmt.Println(err)
@@ -26,6 +27,7 @@ func main() {
 	reader.Comma = '|'
 	reader.LazyQuotes = true
 
+	//Create and open csv file with appended columns
 	writerFile, err := os.OpenFile("./result.csv", os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModePerm)
 	if err != nil {
 		fmt.Println(err)
