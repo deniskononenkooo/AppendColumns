@@ -37,9 +37,6 @@ func main() {
 	}
 	defer writerFile.Close()
 
-	writer := csv.NewWriter(writerFile)
-	writer.Comma = '|'
-
 	text, err := reader.ReadAll()
 	if err != nil {
 		fmt.Println(err)
