@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -15,6 +16,7 @@ import (
 //copy retries ("ID","RetryID","Action","Payload","RetryCount","Type","Timestamp","BucketID","ErrorMessage","UpdatedAt") from 'results.csv' with delimiter='|' and maxbatchsize = 1 ;
 
 func main() {
+	fmt.Println("Start...")
 	//Open csv file with existing columns
 	readerFile, err := os.Open("./dump.csv")
 	if err != nil {
@@ -28,7 +30,7 @@ func main() {
 	reader.LazyQuotes = true
 
 	//Create and open csv file with appended columns
-	writerFile, err := os.OpenFile("./result.csv", os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModePerm)
+	writerFile, err := os.OpenFile("./result.csv", os.O_CREATE|os.O_WRONLY, os.ModePerm)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -51,9 +53,11 @@ func main() {
 
 		bucketID := int(time.Duration(timestamp.UnixNano()).Minutes() / 15)
 
-		line = append(line, t, strconv.Itoa(bucketID), "", t) // append Timestamp, BucketID, ErrorMessage, UpdatedAt
+		line = append(line, t, strconv.Itoa(bucketID), "unknown", t) // append Timestamp, BucketID, ErrorMessage, UpdatedAt
 
-		err = writer.Write(line)
+		str := strings.Join(line, "|")
+
+		_, err = writerFile.WriteString(str + "\r\n")
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -62,5 +66,5 @@ func main() {
 		timestamp = timestamp.Add(-1 * time.Second)
 	}
 
-	writer.Flush()
+	fmt.Println("Done")
 }
