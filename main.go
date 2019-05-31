@@ -12,7 +12,7 @@ import (
 //copy retries ("ID","RetryID","Action","Payload","RetryCount","Type") to 'dump.csv' with delimiter = '|';
 //
 //import
-//copy retries ("ID","RetryID","Action","Payload","RetryCount","Type","Timestamp","BucketID","ErrorMessage","UpdatedAt") from 'results.csv' with delimiter='|' and maxbatchsize = 1 ;
+//copy retries ("ID","RetryID","Action","Payload","RetryCount","Type","Timestamp","BucketID","ErrorMessage","UpdatedAt") from 'result.csv' with delimiter='|' and maxbatchsize = 1 ;
 
 func main() {
 	//Open csv file with existing columns
