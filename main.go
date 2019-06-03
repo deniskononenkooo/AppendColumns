@@ -43,7 +43,7 @@ func main() {
 		return
 	}
 
-	timestamp := time.Now()
+	timestamp := time.Now().Add(-48 * time.Hour)
 
 	for _, line := range text {
 		t := timestamp.Format("2006-01-02 15:04:05")
